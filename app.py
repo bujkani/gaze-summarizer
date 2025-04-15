@@ -81,8 +81,8 @@ def summarize_text(text, model="gpt-4", max_tokens=250):
     except Exception as e:
         return f"An error occurred while summarizing: {str(e)}"
 
-st.set_page_config(page_title="Gaze-Aware Summarizer", layout="wide")
-st.title("👁️ Gaze-Aware Summarizer Dashboard")
+st.set_page_config(page_title="Gaze Summarizer", layout="wide")
+st.title("Gaze Summarizer")
 
 df_raw = generate_simulated_dataset()
 df_agg = aggregate_by_segment(df_raw)
@@ -98,13 +98,13 @@ combined_text = " ".join(top_df["text"].tolist())
 st.subheader(f"Top {top_n} Segments for {selected_user}")
 st.dataframe(top_df[["segment_id", "attention_score", "text"]], use_container_width=True)
 
-st.subheader("📊 Attention Scores")
+st.subheader("Attention Scores")
 fig1, ax1 = plt.subplots(figsize=(10, 4))
 sns.barplot(data=top_df, x="segment_id", y="attention_score", ax=ax1, palette="Blues_d")
 ax1.set_title(f"Top Segments by Attention for {selected_user}")
 st.pyplot(fig1)
 
-st.subheader("🔥 Gaze Heatmap")
+st.subheader("Gaze Heatmap")
 user_gaze = df_raw[df_raw["user_id"] == selected_user]
 heatmap_df = user_gaze.copy()
 heatmap_df["x_bin"] = pd.cut(heatmap_df["x"], bins=30, labels=False)
@@ -115,7 +115,7 @@ sns.heatmap(pivot, cmap="hot", ax=ax2)
 ax2.set_title(f"Gaze Heatmap for {selected_user}")
 st.pyplot(fig2)
 
-st.subheader("🧠 GPT-4 Summary")
+st.subheader("AI Summary")
 with st.spinner("Summarizing using GPT-4..."):
     summary = summarize_text(combined_text)
 st.success("Summary complete!")
