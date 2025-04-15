@@ -1,0 +1,7 @@
+.venv/
+.env
+.DS_Store
+.vscode/
+.streamlit/config.toml
+.cache/
+*.log
